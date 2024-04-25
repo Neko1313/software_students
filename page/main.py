@@ -11,9 +11,6 @@ credentials = {
 def main(page: ft.Page):
     
     
-    
-    
-    
     a = 0
     
     def update_data(credentials):
