@@ -1,15 +1,13 @@
 import flet as ft
 import json
+from tasks import get_task
 
-tasks  = {
-    0: ft.Container(content=ft.Column([ft.Text('First Element') ])),
-    1: ft.Container(content=ft.Column([ft.Text('Second Element')]))
-}
-
+tasks = get_task()
+print(tasks)
 
 
 
-def main(page: ft.Page):
+def task(page: ft.Page):
     
     def change_tasks(number):
         print(page.controls[0].controls[-1])
@@ -34,7 +32,7 @@ def main(page: ft.Page):
             )
         )
 
-ft.app(target=main)
+ft.app(target=task)
     
     
     
