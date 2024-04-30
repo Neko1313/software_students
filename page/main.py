@@ -1,5 +1,6 @@
 import flet as ft
 import json
+from credentials import Credentials
 from tasks import get_task
 
 credentials = {
@@ -9,6 +10,8 @@ credentials = {
         
     }
 
+credentials = Credentials()
+
 tasks = get_task()
 
 def main(page: ft.Page):
@@ -16,8 +19,7 @@ def main(page: ft.Page):
     
     # Функции, связанные со страницей ввода данных    
     def insert_data(e):
-        with open("your_json_file", "w") as fp:
-            json.dump(credentials, fp)
+        credentials.write_info()
         confirmation.open = False
         page.update()
         route_change('/tasks')
@@ -33,10 +35,10 @@ def main(page: ft.Page):
         page.dialog = confirmation
         confirmation.open = True
         page.update()
-        credentials['series'] = passport_data_input.controls[0].value
-        credentials['number'] = passport_data_input.controls[1].value
-        credentials['name'] = name_input.controls[1].value + ' ' + name_input.controls[0].value + ' ' + name_input.controls[2].value
-        print(credentials)
+        credentials.personal['series'] = passport_data_input.controls[0].value
+        credentials.personal['number'] = passport_data_input.controls[1].value
+        credentials.personal['name'] = name_input.controls[1].value + ' ' + name_input.controls[0].value + ' ' + name_input.controls[2].value
+        print(credentials.personal)
     
     
     
@@ -131,11 +133,19 @@ def main(page: ft.Page):
                     rail,
                     ft.VerticalDivider(width=1),
                     ft.Column([ ft.Text("Body!")], alignment=ft.MainAxisAlignment.START, expand=True),
+                    
                 ],
                 expand=True,
-            )
+            ),
+    ft.FilledButton('Отправить',on_click= lambda e: (credentials.write_answer(e.control.parent.controls[0].controls[0].selected_index+1, 
+                                                                              e.control.parent.controls[0].controls[2].controls[1].value),
+                                                    ))
         ])
     
+    
+    button = ft.FilledButton()
+    
+    button.style = ft.ButtonStyle()
     
     #Роутинг
     def route_change(route):

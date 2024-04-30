@@ -1,8 +1,12 @@
 import flet as ft 
 import json 
 
+
 #Заменить на свой 
 PATHNAME = r'./tasks.json'
+
+def handle_submit(cred, number, answer):
+    cred.write_answer(number+1, answer)
 
 def get_task():
     data = show_json(PATHNAME)
