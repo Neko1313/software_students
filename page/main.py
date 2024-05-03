@@ -1,16 +1,7 @@
 import flet as ft
 import json
-from credentials import Credentials
-from tasks import get_task
+from tasks import get_task,credentials
 
-credentials = {
-        'name':'',
-        'series':'',
-        'number':''
-        
-    }
-
-credentials = Credentials()
 
 tasks = get_task()
 
@@ -132,14 +123,17 @@ def main(page: ft.Page):
                 [
                     rail,
                     ft.VerticalDivider(width=1),
-                    ft.Column([ ft.Text("Body!")], alignment=ft.MainAxisAlignment.START, expand=True),
+                    ft.Column([ ft.Text("Body!")], alignment=ft.MainAxisAlignment.CENTER, expand=True),
                     
                 ],
                 expand=True,
             ),
-    ft.FilledButton('Отправить',on_click= lambda e: (credentials.write_answer(e.control.parent.controls[0].controls[0].selected_index+1, 
-                                                                              e.control.parent.controls[0].controls[2].controls[1].value),
-                                                    ))
+    ft.Row(
+        [ft.FilledButton('Отправить',on_click= lambda e: (credentials.write_answer(e.control.parent.parent.controls[0].controls[0].selected_index+1, 
+                                                                              e.control.parent.parent.controls[0].controls[2].controls[1].value,),
+                                                    ))], alignment=ft.MainAxisAlignment.END
+    )
+    
         ])
     
     

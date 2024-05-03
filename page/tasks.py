@@ -1,9 +1,13 @@
 import flet as ft 
 import json 
+from credentials import Credentials
+
+
+credentials = Credentials()
 
 
 #Заменить на свой 
-PATHNAME = r'./tasks.json'
+PATHNAME = r'C:\Users\Lab\Desktop\Something\artem_proj\software_students\tasks.json'
 
 def handle_submit(cred, number, answer):
     cred.write_answer(number+1, answer)
@@ -17,8 +21,12 @@ def get_task():
         el = ft.Column([
             ft.Text(dict['text']),
             ft.CupertinoTextField(),
-            ft.FilledButton('Отправить ответ')
-         ])
+            ft.Row(
+                    [ft.FilledButton('Отправить',on_click= lambda e: (credentials.write_answer(counter+1, 
+                                                                              e.control.parent.parent.controls[1].value,),
+                                                    ))], alignment=ft.MainAxisAlignment.END
+    )
+         ], width=1500, horizontal_alignment=ft.CrossAxisAlignment.CENTER, )
         array.update({counter:el})
         counter+=1
     
